@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Login</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+	crossorigin="anonymous">
+
+<!-- Bootstrap Font Icon CSS -->
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
+
+
+<script src="https://www.google.com/recaptcha/api.js"></script>
+</head>
+<body class="p-4">
+	<h3 class="text-center">Login: Enter details</h3>
+
+	<div class="container mt-4">
+		<div class="row ">
+			<div class="col-6 ">
+				<img class="" style="width: 70%" alt="thumb"
+					src="https://cdn-icons-png.flaticon.com/512/5087/5087579.png">
+
+			</div>
+
+
+			<div class="col-6 ">
+				<form name="loginform" class="text-start p-5" action="login"
+					method="post" onsubmit="return validateform()">
+
+					<div class="mb-3">
+						<label for="emailinput" class="form-label">Email</label> <input
+							type="text" class="form-control" name="email"
+							placeholder="name@example.com" id="emailinput"
+							aria-describedby="emailHelp">
+						<div id="emailHelp" class="text-danger "></div>
+
+					</div>
+					<div class="mb-3">
+						<label for="passwordinput" class="form-label">Password</label> <input
+							type="password" class="form-control" name="password"
+							placeholder="Enter password" id="passwordinput"
+							aria-describedby="passwordHelp"> <i
+							class="bi bi-eye-slash " id="togglePassword"
+							style="float: right; margin-top: -30px; margin-right: 8px; cursor: pointer;"></i>
+
+						<div id="passwordHelp" class="text-danger"></div>
+
+					</div>
+					<div id="g_captcha" class="g-recaptcha mb-2"
+						data-sitekey="6LezLxMjAAAAAInze6_1juwEXgH4EQ9yBfxtDYW9"></div>
+
+					<button class="btn btn-primary mb-2" type="submit">Login</button>
+
+
+					<br> <a href="registration.html">New Registration</a>
+				</form>
+
+			</div>
+		</div>
+	</div>
+
+
+	<script>
+
+	
+	
+	var togglePassword = document.getElementById('togglePassword');
+	var password = document.getElementById('passwordinput');
+	togglePassword.addEventListener("click", function () {
+		
+        const type = password.getAttribute("type") === "password" ? "text" : "password";
+        password.setAttribute("type", type);        
+        this.classList.toggle("bi-eye");
+    });
+	
+	
+		function validateform() {
+			var email = document.loginform.email.value;
+			var password = document.loginform.password.value;
+			document.getElementById('emailHelp').style.display = 'none';
+			document.getElementById('passwordHelp').style.display = 'none';
+
+			if (email == null || email == "") {
+				document.getElementById('emailHelp').style.display = 'inline';
+				document.getElementById('emailHelp').innerHTML ="Please enter email address!";
+				return false;
+			} 
+			
+			if (!validateEmail(email)){
+				document.getElementById('emailHelp').style.display = 'inline';
+				document.getElementById('emailHelp').innerHTML ="Enter valid email address!";
+				return false;
+			} 
+			
+			if (password  == null || password == "") {
+				document.getElementById('passwordHelp').style.display = 'inline';
+				document.getElementById('passwordHelp').innerHTML ="Please enter your password!";
+				return false;
+			}
+			
+			//verify captcha
+			  var response = grecaptcha.getResponse();
+			  if(response.length == 0) { 
+			    alert("Please verify captcha!"); 
+			    return false;
+			  }
+			  
+			
+			
+			
+			
+		}
+		
+		const validateEmail = (email) => {
+			  return String(email)
+			    .toLowerCase()
+			    .match(
+			      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+			    );
+			};
+	</script>
+
+
+
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+		crossorigin="anonymous"></script>
+</body>
+</html>

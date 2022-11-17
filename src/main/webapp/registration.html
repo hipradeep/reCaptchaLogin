@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Add New Member</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+	crossorigin="anonymous">
+	<!-- Bootstrap Font Icon CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
+</head>
+<body class="p-4">
+
+	<h3 class="text-center">Registration: Add new members</h3>
+
+	<div class="container mt-4">
+		<div class="row ">
+			<div class="col-6 ">
+				<img class="" style="width: 70%" alt="thumb"
+					src="https://cdn-icons-png.flaticon.com/512/166/166260.png">
+
+			</div>
+
+
+			<div class="col-6 ">
+				<form name="registrationform" class="text-start p-5" action="registration" method="post" onsubmit="return validateform()" >
+
+
+					<div class="mb-3">
+						<label for="nameinput" class="form-label">Name</label> 
+						<input type="text" class="form-control" name="name" placeholder="Enter your full name"
+							id="nameinput" aria-describedby="nameHelp" >
+						<div id="nameHelp" class="text-danger " ></div>
+						
+					</div>
+					
+					<div class="mb-3">
+						<label for="emailinput" class="form-label">Email</label> 
+						<input type="email" class="form-control" name="email" placeholder="name@example.com"
+							id="emailinput" aria-describedby="emailHelp" >
+						<div id="emailHelp" class="text-danger " ></div>
+						
+					</div>
+					<div class="mb-3">
+						<label for="mobileinput" class="form-label">Mobile</label> 
+						<input type="tel" class="form-control" name="mobile" placeholder="0123456789(optional)" maxlength="10"
+							id="mobileinput" aria-describedby="mobileHelp" >
+						<div id="mobileHelp" class="text-danger " ></div>
+						
+					</div>
+					<div class="mb-3">
+					
+						<label for="passwordinput" class="form-label">Password</label> 
+						<input type="password" class="form-control" name="password" placeholder="Create password"
+							id="passwordinput"  aria-describedby="passwordHelp" />
+							<i class="bi bi-eye-slash " id="togglePassword" style="float:right; margin-top: -30px; margin-right:8px; cursor: pointer;"></i>
+						<div id="passwordHelp" class="text-danger " ></div>
+						
+					</div>
+				
+ 				<button type="submit" class="btn btn-primary mb-2">Submit</button>
+ 				
+ 				
+ 				<br><div>Already register?  <a href="login.html">Login</a>	</div>  	
+
+				</form>
+				
+			</div>
+		</div>
+	</div>
+
+
+
+	<script>
+	
+	var togglePassword = document.getElementById('togglePassword');
+	var password = document.getElementById('passwordinput');
+	togglePassword.addEventListener("click", function () {
+		console.log("hi");
+        const type = password.getAttribute("type") === "password" ? "text" : "password";
+        password.setAttribute("type", type);        
+        this.classList.toggle("bi-eye");
+    });
+	
+	
+		function validateform() {
+			var name = document.registrationform.name.value;
+			var email = document.registrationform.email.value;
+			var mobile = document.registrationform.mobile.value;
+			var password = document.registrationform.password.value;
+			
+			document.getElementById('nameHelp').style.display = 'none';
+			document.getElementById('emailHelp').style.display = 'none';
+			document.getElementById('mobileHelp').style.display = 'none';
+			document.getElementById('passwordHelp').style.display = 'none';
+		
+			if (name == null || name == "") {
+				document.getElementById('nameHelp').style.display = 'inline';
+				document.getElementById('nameHelp').innerHTML ="Please enter your name!";
+				return false;
+			}
+			if(!validateName(name)){
+				document.getElementById('nameHelp').style.display = 'inline';
+				document.getElementById('nameHelp').innerHTML ="Please enter valid name!";
+				return false;
+			}
+
+			
+			if (email == null || email == "") {
+				document.getElementById('emailHelp').style.display = 'inline';
+				document.getElementById('emailHelp').innerHTML ="Please enter email address!";
+				return false;
+			} 
+			
+			if (!validateEmail(email)){
+				document.getElementById('emailHelp').style.display = 'inline';
+				document.getElementById('emailHelp').innerHTML ="Enter valid email address!";
+				return false;
+			} 
+			
+			if ( mobile != ""  && mobile.length != 10) {
+				document.getElementById('mobileHelp').style.display = 'inline';
+				document.getElementById('mobileHelp').innerHTML ="Please valid mobile number!";
+				return false;
+			}
+			
+			if (password  == null || password == "") {
+				document.getElementById('passwordHelp').style.display = 'inline';
+				document.getElementById('passwordHelp').innerHTML ="Please enter your password!";
+				return false;
+			}
+			
+			if (!validatePassword(password)){
+				document.getElementById('passwordHelp').style.display = 'inline';
+				document.getElementById('passwordHelp').innerHTML ="Password must have minimum 8 characters, at least one letter, one number and one special character!";
+				return false;
+			} 
+			
+		}
+		
+		const validateName = (name) => {
+			  return String(name)
+			    .toLowerCase()
+			    .match(
+			    		/^[a-zA-Z]+ [a-zA-Z]+$/
+			    );
+			};
+		
+		const validateEmail = (email) => {
+			  return String(email)
+			    .toLowerCase()
+			    .match(
+			      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+			    );
+			};
+			
+			const validateMobile = (mobile) => {
+				  return String(mobile)
+				    .toLowerCase()
+				    .match(
+				    		/^\d{10}$/
+				    );
+				};
+		const validatePassword = (password) => {
+			  return String(password)
+			    .toLowerCase()
+			    .match(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
+			      
+			    );
+			};
+	</script>
+
+
+
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+		crossorigin="anonymous"></script>
+
+</body>
+</html>

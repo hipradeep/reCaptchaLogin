@@ -36,9 +36,9 @@ public class Login extends HttpServlet {
 		// out.println("Password - " + password);
 
 		// get reCAPTCHA request param
-		String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
-		System.out.println(gRecaptchaResponse);
-		boolean verify = VerifyRecaptcha.verify(gRecaptchaResponse);
+		//String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
+		//System.out.println(gRecaptchaResponse);
+		//boolean verify = VerifyRecaptcha.verify(gRecaptchaResponse);
 
 		String encodedPassword = EncryptionString.encode(password);
 
@@ -59,7 +59,8 @@ public class Login extends HttpServlet {
 				String decodePassword = EncryptionString.deccode(rs.getString(2));
 				System.out.println(decodePassword);
 
-				if (email.equals(rs.getString(1)) && password.equals(decodePassword) && verify) {
+				//add && verify boolean
+				if (email.equals(rs.getString(1)) && password.equals(decodePassword) ) {
 					response.sendRedirect("welcome.html");
 				} else {
 					response.sendRedirect("login.html");

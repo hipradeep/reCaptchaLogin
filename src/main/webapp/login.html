@@ -8,6 +8,8 @@
 	rel="stylesheet"
 	integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
 	crossorigin="anonymous">
+	
+	<link rel="stylesheet" href="css/style.css" type="text/css">
 
 <!-- Bootstrap Font Icon CSS -->
 <link rel="stylesheet"
@@ -16,7 +18,7 @@
 
 <script src="https://www.google.com/recaptcha/api.js"></script>
 </head>
-<body class="p-4">
+<body class="p-4" onload="generate()">
 	<h3 class="text-center">Login: Enter details</h3>
 
 	<div class="container mt-4">
@@ -51,7 +53,28 @@
 						<div id="passwordHelp" class="text-danger"></div>
 
 					</div>
-					<div id="g_captcha" class="g-recaptcha mb-2"  data-sitekey="6LezLxMjAAAAAInze6_1juwEXgH4EQ9yBfxtDYW9"></div>
+					<!-- <div id="g_captcha" class="g-recaptcha mb-2"  data-sitekey="6LezLxMjAAAAAInze6_1juwEXgH4EQ9yBfxtDYW9"></div> -->
+					
+					
+					<div class="row mb-3 px-3">
+					<div class="col-3 text-center" id="captcha">
+					
+			
+					</div>
+					
+					<div class="col-1" onclick="generate()" >
+					<i class="bi bi-arrow-repeat" style="font-size:22px;color:red;"></i>
+					</div>
+					
+					
+					<div class="col-4">
+					
+					<input id="inputCaptcha" class="form-control w-100" placeholder="captcha" >
+					</div>
+					
+					
+					
+					</div>
 
 					<button class="btn btn-primary mb-2" type="submit">Login</button>
 
@@ -61,6 +84,37 @@
 			</div>
 		</div>
 	</div>
+	
+	
+	<script type="text/javascript">
+	
+	var captcha;
+	function generate() {
+	 
+	    // Clear old input
+	    document.getElementById("inputCaptcha").value = "";
+	 
+	    // Access the element to store
+	    // the generated captcha
+	    captcha = document.getElementById("captcha");
+	    var uniquechar = "";
+	 
+	    const randomchar =	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+	 
+	    // Generate captcha for length of
+	    // 5 with random character
+	    for (let i = 1; i < 5; i++) {
+	        uniquechar += randomchar.charAt(Math.random() * randomchar.length)
+	    }
+	 
+	    // Store generated input
+	    captcha.innerHTML = uniquechar;
+	}
+	
+	
+	</script>
+	
+	
 
 	<script type="text/javascript">
 			var togglePassword = document.getElementById('togglePassword');
@@ -80,8 +134,11 @@
 		function validateform() {
 			var email = document.loginform.email.value;
 			var password = document.loginform.password.value;
+			const usr_input = document.getElementById("inputCaptcha").value;
+			const captcha = document.getElementById("captcha");
 			document.getElementById('emailHelp').style.display = 'none';
 			document.getElementById('passwordHelp').style.display = 'none';
+			  
 
 			if (email == null || email == "") {
 				document.getElementById('emailHelp').style.display = 'inline';
@@ -102,11 +159,18 @@
 			}
 			
 			//verify captcha
-			  var response = grecaptcha.getResponse();
-			  if(response.length == 0) { 
-			    alert("Please verify captcha!"); 
-			    return false;
-			  }
+			//  var response = grecaptcha.getResponse();
+		    // if(response.length == 0) { 
+		    //  alert("Please verify captcha!"); 
+			//  return false;
+			//  }
+		    
+		    if(usr_input != captcha.innerHTML){
+		    	generate();
+		    	alert("Please verify captcha!"); 
+		    	return false;
+		    }
+		  
 			 
 		}
 		
